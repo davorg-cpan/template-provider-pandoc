@@ -13,8 +13,8 @@ sub new {
   my $class = shift;
   my %opts  = @_;
 
-  my $ext = (exists $opts{EXTENSTION}) ?
-    delete $opts{EXTENSION} : 'md';
+  my $ext = 'md';
+  $ext = delete $opts{EXTENSION} if exists $opts{EXTENSION};
 
   my $self = $class->SUPER::new(%opts);
 
