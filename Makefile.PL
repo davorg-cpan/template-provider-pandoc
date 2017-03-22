@@ -1,0 +1,23 @@
+use ExtUtils::MakeMaker;
+
+WriteMakefile(
+  NAME         => 'Template::Provider::Markdown::Pandoc',
+  VERSION_FROM => 'lib/Template/Provider/Markdown/Pandoc.pm',
+  LICENSE      => 'perl_5',
+
+  PREREQ_PM    => {
+    Template => 0,
+    Pandoc   => 0,
+  },
+
+  META_MERGE    => {
+    'meta-spec' => { version => 2 },
+    resources => {
+      repository => {
+        type => 'git',
+        url  => 'https://github.com/davorg/template-provider-markdown-pandoc.git',
+        web  => 'https://github.com/davorg/template-provider-markdown-pandoc',
+      },
+    },
+  }
+);
