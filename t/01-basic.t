@@ -4,17 +4,59 @@ use warnings;
 use Template;
 use Template::Provider::Markdown::Pandoc;
 use FindBin '$Bin';
- 
-use Test::More tests => 1;
- 
-my $tt = Template->new(
-  LOAD_TEMPLATES => [
-    Template::Provider::Markdown::Pandoc->new( INCLUDE_PATH => "$Bin/../t/templates" ),
-  ],
-);
-my $template = 'My name is [% author %]';
-my $out;
-$tt->process('basic.md', { author => "Charlie" }, \$out);
- 
-is($out, "<p>My name is Charlie</p>", "Basic conversion");
 
+use Test::More;
+
+my $results = {
+  html => '<p>My name is Dave</p>',
+  text => 'My name is Dave',
+};
+
+my $tests = [{
+  name => 'default',
+  params => {},
+  expected => {
+    md => 'html',
+    tt => 'text',
+  }
+}, {
+  name => 'all',
+  params => { EXTENSION => undef },
+  expected => {
+    md => 'html',
+    tt => 'html',
+  }
+}, {
+  name => 'tt',
+  params => { EXTENSION => 'tt' },
+  expected => {
+    md => 'text',
+    tt => 'html',
+  }
+}];
+
+foreach my $test (@$tests) {
+  my $provider = Template::Provider::Markdown::Pandoc->new(
+    INCLUDE_PATH => "$Bin/../t/templates",
+    %{ $test->{params} },
+  );
+  my $tt = Template->new(
+    LOAD_TEMPLATES => $provider,
+  );
+
+  my $vars = { author => 'Dave' };
+  is(process_template($tt, 'basic.md',$vars),
+     $results->{$test->{expected}{md}});
+  is(process_template($tt, 'basic.tt', $vars),
+     $results->{$test->{expected}{tt}});
+}
+
+done_testing();
+
+sub process_template {
+  my ($tt, $template, $vars) = @_;
+
+  my $out;
+  $tt->process($template, $vars, \$out);
+  return $out;
+}
