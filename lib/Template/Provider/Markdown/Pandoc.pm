@@ -18,7 +18,7 @@ sub new {
 
   my $self = $class->SUPER::new(%opts);
 
-  $self->{extension} = $ext;
+  $self->{EXTENSION} = $ext;
 
   return bless $self, $class;
 }
@@ -29,7 +29,7 @@ sub _template_content {
 
   my ($data, $error, $mod_date) = $self->SUPER::_template_content($path);
 
-  if (! defined $self->{extension} or $path =~ /\.\Q$self->{extension}\E$/) {
+  if (! defined $self->{EXTENSION} or $path =~ /\.\Q$self->{EXTENSION}\E$/) {
     $pandoc //= pandoc;
     $data = $pandoc->convert(markdown => 'html', $data);
   }
