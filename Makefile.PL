@@ -5,6 +5,8 @@ WriteMakefile(
   VERSION_FROM => 'lib/Template/Provider/Markdown/Pandoc.pm',
   LICENSE      => 'perl_5',
 
+  MIN_PERL_VERSION => '5.10.0',
+
   PREREQ_PM    => {
     Template => 0,
     Pandoc   => 0,

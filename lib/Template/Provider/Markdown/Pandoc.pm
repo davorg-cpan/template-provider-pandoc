@@ -79,6 +79,8 @@ package Template::Provider::Markdown::Pandoc;
 
 use strict;
 use warnings;
+use 5.010;
+
 use parent 'Template::Provider';
 use Pandoc;
 
