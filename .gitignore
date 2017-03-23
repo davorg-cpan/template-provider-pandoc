@@ -1,0 +1,6 @@
+MANIFEST.bak
+MYMETA.json
+MYMETA.yml
+Makefile
+Template-Provider-Markdown-Pandoc-*.tar.gz
+Template-Provider-Markdown-Pandoc-*/
