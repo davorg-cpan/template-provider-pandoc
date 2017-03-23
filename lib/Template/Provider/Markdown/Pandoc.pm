@@ -56,7 +56,7 @@ are two reasons.
 
 =item 1
 
-Template::Provider::Markdown uses Text::Markdown to do the conversion and
+Template::Provider::Markdown uses L<Text::Markdown> to do the conversion and
 I've found a few problems with the Markdown conversion in that module. This
 module uses C<pandoc> (see L<http://pandoc.org/>) a very powerful and
 flexible tool for converting between document formats.
