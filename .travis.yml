@@ -13,4 +13,4 @@ before_install:
   - cpanm --quiet --installdeps --notest .
   - cpanm -n Devel::Cover::Report::Coveralls
 script:
-  perl Build.PL && ./Build build && cover -test -report coveralls
+  perl Makefile.PL && make && cover -test -report coveralls
