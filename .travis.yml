@@ -8,7 +8,7 @@ perl:
   - "5.22"
 
 before_install:
-  apt-get install pandoc
-  cpanm -n Devel::Cover::Report::Coveralls
+  - apt-get install pandoc
+  - cpanm -n Devel::Cover::Report::Coveralls
 script:
   perl Build.PL && ./Build build && cover -test -report coveralls
