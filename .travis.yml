@@ -10,6 +10,7 @@ perl:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y pandoc
+  - cpanm --quiet --installdeps --notest .
   - cpanm -n Devel::Cover::Report::Coveralls
 script:
   perl Build.PL && ./Build build && cover -test -report coveralls
