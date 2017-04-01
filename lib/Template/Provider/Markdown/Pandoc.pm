@@ -84,7 +84,7 @@ use 5.010;
 use parent 'Template::Provider';
 use Pandoc;
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.0.2';
 
 my $pandoc;
 
