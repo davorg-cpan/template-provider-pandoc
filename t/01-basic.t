@@ -7,6 +7,11 @@ use FindBin '$Bin';
 
 use Test::More;
 
+# Easy way to bail out if the pandoc executable isn't installed
+use Pandoc;
+plan skip_all => "pandoc isn't installed; this module won't work"
+  unless pandoc;
+
 my $results = {
   html => '<p>My name is Dave</p>',
   text => 'My name is Dave',
