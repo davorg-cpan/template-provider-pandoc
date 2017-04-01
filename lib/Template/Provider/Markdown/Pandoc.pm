@@ -38,7 +38,7 @@ parameter if you're happy to use that extension.
 If you want to pre-process all template files, then you need to explicitly
 set the C<EXTENSION> parameter to C<undef>.
 
-    y $tt = Template->new(
+    my $tt = Template->new(
       LOAD_TEMPLATES = [
         Template::Provider::Markdown::Pandoc->new(
           EXTENSION => undef,
