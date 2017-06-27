@@ -88,18 +88,16 @@ our $VERSION = '0.0.2';
 
 my $pandoc;
 
-sub new {
-  my $class = shift;
-  my %opts  = @_;
+sub _init {
+  my $self = shift;
+  my ($opts) = @_;
 
   my $ext = 'md';
-  $ext = delete $opts{EXTENSION} if exists $opts{EXTENSION};
-
-  my $self = $class->SUPER::new(%opts);
+  $ext = delete $opts->{EXTENSION} if exists $opts->{EXTENSION};
 
   $self->{EXTENSION} = $ext;
 
-  return bless $self, $class;
+  return $self->SUPER::_init($opts);
 }
 
 sub _template_content {
