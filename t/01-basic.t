@@ -50,12 +50,12 @@ foreach my $test (@$tests) {
   );
 
   my $vars = { author => 'Dave' };
-  is(process_template($tt, 'basic.md',$vars),
-     $results->{$test->{expected}{md}},
-     "'$test->{name}' test using basic.md should return $test->{expected}{md}");
-  is(process_template($tt, 'basic.tt', $vars),
-     $results->{$test->{expected}{tt}},
-     "'$test->{name}' test using basic.tt should return $test->{expected}{tt}");
+
+  for (qw[md tt]) {
+    is(process_template($tt, "basic.$_", $vars),
+     $results->{$test->{expected}{$_}},
+     "'$test->{name}' test using basic.$_ should return $test->{expected}{$_}");
+  }
 }
 
 done_testing();
