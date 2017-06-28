@@ -75,23 +75,52 @@ use strict;
 use warnings;
 use 5.010;
 
-use parent 'Template::Provider';
-use Pandoc;
+use Moose;
+use MooseX::NonMoose;
+extends 'Template::Provider';
+
+use Pandoc ();
 
 our $VERSION = '0.0.2';
 
-my $pandoc;
+has pandoc => (
+  isa => 'Pandoc',
+  is  => 'ro',
+  lazy_build => 1,
+);
 
-my $default_extensions = {
-  md   => 'markdown',
-};
-my $default_output_format = 'html';
+sub _build_pandoc {
+  return Pandoc->new;
+}
 
-sub _init {
+has default_extensions => (
+  isa => 'HashRef',
+  is  => 'ro',
+  lazy_build => 1,
+);
+
+sub _build_default_extensions {
+  return {
+    md => 'markdown',
+  };
+}
+
+has default_output_format => (
+  isa => 'Str',
+  is  => 'ro',
+  lazy_build => 1,
+);
+
+sub _build_default_output_format {
+  return 'html';
+}
+
+before _init  => sub {
   my $self = shift;
   my ($opts) = @_;
 
-  my $exts = $default_extensions;
+  my $exts = $self->default_extensions;
+
   if (exists $opts->{EXTENSIONS}) {
     $exts->{$_} = $opts->{EXTENSIONS}{$_} for keys %{$opts->{EXTENSIONS}};
     delete $opts->{EXTENSIONS};
@@ -99,16 +128,16 @@ sub _init {
 
   $self->{EXTENSIONS} = $exts;
 
-  $self->{OUTPUT_FORMAT} = $opts->{OUTPUT_FORMAT} // $default_output_format;
+  $self->{OUTPUT_FORMAT} =
+    $opts->{OUTPUT_FORMAT} // $self->default_output_format;
+};
 
-  return $self->SUPER::_init($opts);
-}
-
-sub _template_content {
+around _template_content => sub {
+  my $orig = shift;
   my $self = shift;
   my ($path) = @_;
 
-  my ($data, $error, $mod_date) = $self->SUPER::_template_content($path);
+  my ($data, $error, $mod_date) = $self->$orig(@_);
 
   my $done = 0;
 
@@ -116,8 +145,7 @@ sub _template_content {
     next if $_ eq '*';
     if ($path =~ /\.\Q$_\E$/) {
       if (defined $self->{EXTENSIONS}{$_}) {
-        $pandoc //= pandoc;
-        $data = $pandoc->convert(
+        $data = $self->pandoc->convert(
           $self->{EXTENSIONS}{$_} => $self->{OUTPUT_FORMAT}, $data
         );
       }
@@ -127,14 +155,18 @@ sub _template_content {
   }
 
   if (!$done and exists $self->{EXTENSIONS}{'*'}) {
-    $data = $pandoc->convert(
+    $data = $self->pandoc->convert(
       $self->{EXTENSIONS}{'*'} => $self->{OUTPUT_FORMAT}, $data
     );
   }
 
   return ($data, $error, $mod_date) if wantarray;
   return $data;
-}
+};
+
+no Moose;
+# no need to fiddle with inline_constructor here
+__PACKAGE__->meta->make_immutable;
 
 1;
 

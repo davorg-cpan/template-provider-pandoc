@@ -10,6 +10,8 @@ WriteMakefile(
   PREREQ_PM    => {
     Template => 0,
     Pandoc   => 0,
+    Moose    => 0,
+    MooseX::NonMoose => 0,
   },
 
   META_MERGE    => {
