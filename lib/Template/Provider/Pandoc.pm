@@ -87,6 +87,7 @@ has pandoc => (
   isa => 'Pandoc',
   is  => 'ro',
   lazy_build => 1,
+  handles => [qw[convert]],
 );
 
 sub _build_pandoc {
@@ -145,7 +146,7 @@ around _template_content => sub {
     next if $_ eq '*';
     if ($path =~ /\.\Q$_\E$/) {
       if (defined $self->{EXTENSIONS}{$_}) {
-        $data = $self->pandoc->convert(
+        $data = $self->convert(
           $self->{EXTENSIONS}{$_} => $self->{OUTPUT_FORMAT}, $data
         );
       }
@@ -155,7 +156,7 @@ around _template_content => sub {
   }
 
   if (!$done and exists $self->{EXTENSIONS}{'*'}) {
-    $data = $self->pandoc->convert(
+    $data = $self->convert(
       $self->{EXTENSIONS}{'*'} => $self->{OUTPUT_FORMAT}, $data
     );
   }
