@@ -29,49 +29,43 @@ This module can accept all of the standard parameters that can be passed
 to any Template provider module. See L<Template::Provider> for the full
 list.
 
-This module accepts one extra parameter, C<EXTENSION>, which defines the
-file extension that is used to identify Markdown files. Only template
-files with this extension will be pre-processed by this module. The
-default extension is 'md', so you don't need to pass an C<EXTENSION>
-parameter if you're happy to use that extension.
+This module accepts two extra parameters, C<EXTENSIONS>, which defines the
+file extensions that is used to identify files that require conversion, and
+C<OUTPUT_FORMAT> which defines the the format that template will be converted
+into.
 
-If you want to pre-process all template files, then you need to explicitly
-set the C<EXTENSION> parameter to C<undef>.
+C<EXTENSIONS> is a hash reference. The default is to only handle Markdown
+files (which are identified by the extension .md). You can get a full list
+of the allowed input formats by running
 
-    my $tt = Template->new(
-      LOAD_TEMPLATES = [
-        Template::Provider::Pandoc->new(
-          EXTENSION => undef,
-        },
-      ],
+    $ pandoc --list-input-formats
+
+at a command line.
+
+The C<EXTENSIONS> option supports one special option. If you use `*` as
+an extenstion, then files with any extension will be converted using the
+supplied format. So code like:
+
+    my $provider = Template::Provider::Pandoc(
+        EXTENSIONS => { '*' => 'markdown' },
     );
 
-=head1 Template::Provider
+will lead to all files being pre-processed as Markdown files before being
+handed to the Template Toolkit.
 
-There is already a module called L<Template::Provider> available
-on CPAN, so why did I write another, very similar-sounding, module? There
-are two reasons.
+C<OUTPUT_FORMAT> is a single, scalar value containing the name of an output
+format. The default value is C<html>. You can get a full list of the
+allowed putput values by running
 
-=over 4
+    $ pandoc --list-output-values
 
-=item 1
+at a command line.
 
-Template::Provider uses L<Text> to do the conversion and
-I've found a few problems with the Markdown conversion in that module. This
-module uses C<pandoc> (see L<http://pandoc.org/>) a very powerful and
-flexible tool for converting between document formats.
+=head1 Template::Provider::Markdown::Pandoc
 
-=item 2
-
-Template::Provider assumes that all of your templates are in
-Markdown and converts them all. That didn't fit with what I wanted to. I
-only wanted to convert specific templates.
-
-However, because I'm using file extensions to recognise the templates
-that need conversion, this module can only be used to pre-process templates
-that are stored in files. This isn't a restriction in my use cases.
-
-=back
+This module is a successor to Template::Provider::Markdown::Pandoc. This
+replacement module has all the functionality of the older module, and a lot
+more besides. And, as a bonus, it has a shorter name!
 
 =cut
 
@@ -84,13 +78,12 @@ use 5.010;
 use parent 'Template::Provider';
 use Pandoc;
 
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.1';
 
 my $pandoc;
 
 my $default_extensions = {
   md   => 'markdown',
-  html => 'html',
 };
 my $default_output_format = 'html';
 
