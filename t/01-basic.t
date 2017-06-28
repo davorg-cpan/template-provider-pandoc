@@ -26,14 +26,14 @@ my $tests = [{
   }
 }, {
   name => 'all',
-  params => { EXTENSION => undef },
+  params => { EXTENSIONS => { '*' => 'markdown' } },
   expected => {
     md => 'html',
     tt => 'html',
   }
 }, {
   name => 'tt',
-  params => { EXTENSION => 'tt' },
+  params => { EXTENSIONS => { tt => 'markdown', md => undef } },
   expected => {
     md => 'text',
     tt => 'html',
@@ -42,7 +42,7 @@ my $tests = [{
 
 foreach my $test (@$tests) {
   my $provider = Template::Provider::Pandoc->new(
-    INCLUDE_PATH => "$Bin/../t/templates",
+    INCLUDE_PATH => "$Bin/templates",
     %{ $test->{params} },
   );
   my $tt = Template->new(

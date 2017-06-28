@@ -88,14 +88,25 @@ our $VERSION = '0.0.2';
 
 my $pandoc;
 
+my $default_extensions = {
+  md   => 'markdown',
+  html => 'html',
+};
+my $default_output_format = 'html';
+
 sub _init {
   my $self = shift;
   my ($opts) = @_;
 
-  my $ext = 'md';
-  $ext = delete $opts->{EXTENSION} if exists $opts->{EXTENSION};
+  my $exts = $default_extensions;
+  if (exists $opts->{EXTENSIONS}) {
+    $exts->{$_} = $opts->{EXTENSIONS}{$_} for keys %{$opts->{EXTENSIONS}};
+    delete $opts->{EXTENSIONS};
+  }
 
-  $self->{EXTENSION} = $ext;
+  $self->{EXTENSIONS} = $exts;
+
+  $self->{OUTPUT_FORMAT} = $opts->{OUTPUT_FORMAT} // $default_output_format;
 
   return $self->SUPER::_init($opts);
 }
@@ -106,9 +117,26 @@ sub _template_content {
 
   my ($data, $error, $mod_date) = $self->SUPER::_template_content($path);
 
-  if (! defined $self->{EXTENSION} or $path =~ /\.\Q$self->{EXTENSION}\E$/) {
-    $pandoc //= pandoc;
-    $data = $pandoc->convert(markdown => 'html', $data);
+  my $done = 0;
+
+  for (keys %{$self->{EXTENSIONS}}) {
+    next if $_ eq '*';
+    if ($path =~ /\.\Q$_\E$/) {
+      if (defined $self->{EXTENSIONS}{$_}) {
+        $pandoc //= pandoc;
+        $data = $pandoc->convert(
+          $self->{EXTENSIONS}{$_} => $self->{OUTPUT_FORMAT}, $data
+        );
+      }
+      $done = 1;
+      last;
+    }
+  }
+
+  if (!$done and exists $self->{EXTENSIONS}{'*'}) {
+    $data = $pandoc->convert(
+      $self->{EXTENSIONS}{'*'} => $self->{OUTPUT_FORMAT}, $data
+    );
   }
 
   return ($data, $error, $mod_date) if wantarray;
