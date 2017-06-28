@@ -1,6 +1,6 @@
 =head1 NAME
 
-Template::Provider::Pandoc - expand Markdown templates to HTML
+Template::Provider::Pandoc - pre-process templates with Pandoc
 
 =head1 SYNOPSIS
 
@@ -16,7 +16,7 @@ Template::Provider::Pandoc - expand Markdown templates to HTML
 =head1 DESCRIPTION
 
 Template::Provider::Pandoc is an extension to the Template Toolkit
-which automatically converts Markdown files into HTML before they are
+which automatically processes templates using Pandoc before they are
 processed by TT.
 
 =head1 USAGE
@@ -25,7 +25,7 @@ Like any Template provider module, you will usually use this module by
 creating an instance of the object and passing that in the
 C<LOAD_TEMPLATES> parameter to the Template module's C<new> method.
 
-This module can accept all of the standard parameters that can be passed
+This module accepts all of the standard parameters that can be passed
 to any Template provider module. See L<Template::Provider> for the full
 list.
 
