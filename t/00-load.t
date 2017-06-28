@@ -1,9 +1,9 @@
 use Test::More;
  
 BEGIN {
-  use_ok( 'Template::Provider::Markdown::Pandoc' );
+  use_ok( 'Template::Provider::Pandoc' );
 }
  
-diag( "Testing Template::Provider::Markdown::Pandoc $Template::Provider::Markdown::Pandoc::VERSION, Perl $], $^X" );
+diag( "Testing Template::Provider::Pandoc $Template::Provider::Pandoc::VERSION, Perl $], $^X" );
 
 done_testing;

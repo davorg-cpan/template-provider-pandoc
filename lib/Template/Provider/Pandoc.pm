@@ -1,21 +1,21 @@
 =head1 NAME
 
-Template::Provider::Markdown::Pandoc - expand Markdown templates to HTML
+Template::Provider::Pandoc - expand Markdown templates to HTML
 
 =head1 SYNOPSIS
 
     use Template;
-    use Template::Provider::Markdown::Pandoc;
+    use Template::Provider::Pandoc;
 
     my $tt = Template->new(
-      LOAD_TEMPLATES = [ Template::Provider::Markdown::Pandoc->new ],
+      LOAD_TEMPLATES = [ Template::Provider::Pandoc->new ],
     );
 
     $tt->process('template.md', \%vars)
 
 =head1 DESCRIPTION
 
-Template::Provider::Markdown::Pandoc is an extension to the Template Toolkit
+Template::Provider::Pandoc is an extension to the Template Toolkit
 which automatically converts Markdown files into HTML before they are
 processed by TT.
 
@@ -40,15 +40,15 @@ set the C<EXTENSION> parameter to C<undef>.
 
     my $tt = Template->new(
       LOAD_TEMPLATES = [
-        Template::Provider::Markdown::Pandoc->new(
+        Template::Provider::Pandoc->new(
           EXTENSION => undef,
         },
       ],
     );
 
-=head1 Template::Provider::Markdown
+=head1 Template::Provider
 
-There is already a module called L<Template::Provider::Markdown> available
+There is already a module called L<Template::Provider> available
 on CPAN, so why did I write another, very similar-sounding, module? There
 are two reasons.
 
@@ -56,14 +56,14 @@ are two reasons.
 
 =item 1
 
-Template::Provider::Markdown uses L<Text::Markdown> to do the conversion and
+Template::Provider uses L<Text> to do the conversion and
 I've found a few problems with the Markdown conversion in that module. This
 module uses C<pandoc> (see L<http://pandoc.org/>) a very powerful and
 flexible tool for converting between document formats.
 
 =item 2
 
-Template::Provider::Markdown assumes that all of your templates are in
+Template::Provider assumes that all of your templates are in
 Markdown and converts them all. That didn't fit with what I wanted to. I
 only wanted to convert specific templates.
 
@@ -75,7 +75,7 @@ that are stored in files. This isn't a restriction in my use cases.
 
 =cut
 
-package Template::Provider::Markdown::Pandoc;
+package Template::Provider::Pandoc;
 
 use strict;
 use warnings;
@@ -131,6 +131,6 @@ modify it under the same terms as Perl itself.
 =head1 SEE ALSO
 
 L<Template>, L<Template::Provider>, L<Pandoc>,
-L<Template::Provider::Markdown>.
+L<Template::Provider>.
 
 =cut

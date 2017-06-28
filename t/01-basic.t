@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Template;
-use Template::Provider::Markdown::Pandoc;
+use Template::Provider::Pandoc;
 use FindBin '$Bin';
 
 use Test::More;
@@ -41,7 +41,7 @@ my $tests = [{
 }];
 
 foreach my $test (@$tests) {
-  my $provider = Template::Provider::Markdown::Pandoc->new(
+  my $provider = Template::Provider::Pandoc->new(
     INCLUDE_PATH => "$Bin/../t/templates",
     %{ $test->{params} },
   );

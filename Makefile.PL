@@ -1,8 +1,8 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-  NAME         => 'Template::Provider::Markdown::Pandoc',
-  VERSION_FROM => 'lib/Template/Provider/Markdown/Pandoc.pm',
+  NAME         => 'Template::Provider::Pandoc',
+  VERSION_FROM => 'lib/Template/Provider/Pandoc.pm',
   LICENSE      => 'perl_5',
 
   MIN_PERL_VERSION => '5.10.0',
