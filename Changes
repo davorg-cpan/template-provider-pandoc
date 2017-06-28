@@ -5,6 +5,7 @@
 ### Added
 
 - Enhancements to internals and tests.
+- Renamed to Template::Provider::Pandoc.
 
 ## [0.0.2] - 2017-04-01
 
