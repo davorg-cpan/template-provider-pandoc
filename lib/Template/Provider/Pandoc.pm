@@ -184,7 +184,6 @@ modify it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-L<Template>, L<Template::Provider>, L<Pandoc>,
-L<Template::Provider>.
+L<Template>, L<Template::Provider>, L<Pandoc>.
 
 =cut
