@@ -4,3 +4,5 @@ MYMETA.yml
 Makefile
 Template-Provider-Markdown-Pandoc-*.tar.gz
 Template-Provider-Markdown-Pandoc-*/
+blib/*
+pm_to_blib
