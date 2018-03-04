@@ -19,8 +19,8 @@ WriteMakefile(
     resources => {
       repository => {
         type => 'git',
-        url  => 'https://github.com/davorg/template-provider-markdown-pandoc.git',
-        web  => 'https://github.com/davorg/template-provider-markdown-pandoc',
+        url  => 'https://github.com/davorg/template-provider-pandoc.git',
+        web  => 'https://github.com/davorg/template-provider-pandoc',
       },
     },
   }
