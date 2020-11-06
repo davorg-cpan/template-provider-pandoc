@@ -155,7 +155,7 @@ around _template_content => sub {
     }
   }
 
-  if (!$done and exists $self->{EXTENSIONS}{'*'}) {
+  if (not $done and exists $self->{EXTENSIONS}{'*'}) {
     $data = $self->convert(
       $self->{EXTENSIONS}{'*'} => $self->{OUTPUT_FORMAT}, $data
     );
