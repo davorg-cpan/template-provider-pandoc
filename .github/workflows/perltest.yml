@@ -21,7 +21,7 @@ jobs:
         perl: [ 'latest' ]
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up perl
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -30,7 +30,7 @@ jobs:
       - run: cpanm --installdeps .
       - run: prove -lv t
       - name: Archive cpan logs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cpan-log
           path: /home/runner/.cpan/work/*/build.log
