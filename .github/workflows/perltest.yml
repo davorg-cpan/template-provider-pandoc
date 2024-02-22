@@ -15,7 +15,7 @@ jobs:
       perl_version: "[ 'latest' ]"
 
   coverage:
-    uses: PerlToolsTeam/github_workflows/.github/workflows/cpan-perlcritic.yml@main
+    uses: PerlToolsTeam/github_workflows/.github/workflows/cpan-coverage.yml@main
 
   perlcritic:
     uses: PerlToolsTeam/github_workflows/.github/workflows/cpan-perlcritic.yml@main
