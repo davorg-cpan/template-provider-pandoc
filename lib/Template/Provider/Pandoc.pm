@@ -164,13 +164,9 @@ around _template_content => sub {
 
   my ($data, $error, $mod_date) = $self->$orig(@_);
 
-  warn "data is: $data\n";
-  warn "STRIP_FRONT_MATTER is: $self->{STRIP_FRONT_MATTER}\n";
-
   if ($self->{STRIP_FRONT_MATTER}) {
     $data =~ s/\A---\n.+?\n---\n//;
   }
-  warn "data is: $data\n";
 
   my $done = 0;
 
