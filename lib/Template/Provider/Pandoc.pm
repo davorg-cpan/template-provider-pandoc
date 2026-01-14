@@ -103,7 +103,7 @@ extends 'Template::Provider';
 
 use Pandoc ();
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 
 has pandoc => (
   isa => 'Pandoc',
